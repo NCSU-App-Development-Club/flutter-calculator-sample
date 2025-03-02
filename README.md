@@ -1,4 +1,4 @@
-# calculator
+# Calculator
 
 A simple calculator app in Flutter that demonstrates Flutter's many features. The calculator is not complete and only supports basic operations (and may have a bug or two).
 
@@ -10,7 +10,7 @@ I'd suggest starting by looking at the `main.dart` file and then moving on to th
 
 Please ask questions in the Discord if something doesn't make sense or if you want to know more about something!
 
-## file structure
+## File structure
 
 - `lib/main.dart` : The entry point of the application. It's where we define the global theme of the app and the initial widget to use as our homepage.
 
@@ -30,3 +30,10 @@ Please ask questions in the Discord if something doesn't make sense or if you wa
 ---
 
 In a more complicated app, we might split things up even more, such as having separate folders for separate screens and so on. But for this simple app, this structure is enough.
+
+## Screenshots
+
+<img src="https://github.com/user-attachments/assets/a526f55a-9707-48ad-9138-129de7628fc2" width="256" />
+<img src="https://github.com/user-attachments/assets/3ba74fd4-797a-4d9c-a131-2d9d0e7f537e" width="256" />
+<img src="https://github.com/user-attachments/assets/01c171f5-2b51-4e1d-b879-4ee591a3862c" width="256" />
+<img src="https://github.com/user-attachments/assets/ed09ecc7-58e5-4c8b-9cbd-8fd5f68b148d" width="256" />
