@@ -20,8 +20,9 @@ class MyApp extends StatelessWidget {
     // we can also access the brightness of the device (light or dark mode)
     // any widget that uses MediaQuery will rebuild when the data you're accessing changes
     // so if the user changes to dark mode, the app will rebuild with the new theme
+    // this happens even if the widget is stateless!
     Brightness brightness = MediaQuery.platformBrightnessOf(context);
-  
+
     return MaterialApp(
       title: 'Calculator Demo',
       // set global theme of the app

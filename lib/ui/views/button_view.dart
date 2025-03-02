@@ -20,8 +20,8 @@ class ButtonView extends StatelessWidget {
     // they make up a 4x4 grid of buttons
     // in addition we have an equals button at the bottom
 
-    // the rows are wrapped in Expanded widgets so they take up all vertical space
-    // the buttons are wrapped in Expanded widgets so they take up all horizontal space
+    // the rows are wrapped in Expanded widgets so they evenly take up all vertical space
+    // the buttons are wrapped in Expanded widgets so they evenly take up all horizontal space
     // this makes the buttons fill the screen nicely and adjust to different screen sizes
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

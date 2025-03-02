@@ -18,6 +18,10 @@ class _HomeScreenState extends State<HomeScreen> {
   // will remain even if we rebuild HomeScreen
   final Calculator _calculator = Calculator();
 
+  // result of the operation, if null we'll hide the text
+  // and if an error occurs, we'll set the result to "Error"
+  String? _result;
+
   // this function will be called when a button is pressed
   // see the build function below to see how it's passed to ButtonView
   // see button_view.dart to see how we're using switch statements to handle different button presses
@@ -31,10 +35,10 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case EqualsButton():
         try {
-          _calculator.calculate();
+          _result = _calculator.calculate();
         } on CalculatorException catch (e) {
           // if there's an error, set the result to "Error"
-          _calculator.result = "Error";
+          _result = "Error";
           // and show a snackbar with the error message
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(e.description),
@@ -44,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case ClearButton():
         _calculator.clear();
+        _result = null;
         break;
     }
 
@@ -53,9 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // scaffold provides the basic structure of the app
-    // access to the theme, app bar (if we want one, we don't), etc.
-    // it also gives a background color to the app
+    // scaffold provides the basic structure of a page:
+    // access to the theme, app bar, etc.
+    // it also adds background color to the page
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calculator Demo"),
@@ -81,8 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: NumberView(
-                    operation: _calculator.operation,
-                    result: _calculator.result),
+                    operation: _calculator.operation, result: _result),
               ),
               Expanded(
                 flex: 4,

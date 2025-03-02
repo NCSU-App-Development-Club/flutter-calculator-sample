@@ -1,12 +1,17 @@
 import 'exceptions.dart';
 
 // represents the 4 operations of our calculator
+// enums are good for simple states like this
+// more advanced states that have dynamic data can be represented with sealed classes
+// see the ButtonType sealed class in calculator_button.dart for an example
 enum Operator {
   add,
   subtract,
   multiply,
   divide;
 
+  // enums can have functions too
+  // getters are functions that are called like variables (e.g. operator.symbol instead of operator.symbol())
   // returns the symbol of the operator
   String get symbol {
     switch (this) {
@@ -41,16 +46,13 @@ class Calculator {
   String _left = "";
   String _right = "";
   Operator? _operator;
-  String? result;
 
-  // getter that returns a formatted string of the operation
+  // getter that returns a formatted string of the current operation
   // i.e. "3 + 4" or "3.2 - 1" or "3 +" if no right operand yet
-  //
-  // ps: getters are just functions that look like variables
-  // e.g. calculator.operation instead of calculator.operation()
-  String get operation {
+  // we use this to display the current operation on the screen as the user types
+  String? get operation {
     if (_left.isEmpty) {
-      return "0";
+      return null;
     } else if (_operator == null) {
       return _left;
     } else if (_right.isEmpty) {
@@ -60,15 +62,11 @@ class Calculator {
     }
   }
 
-  // setter that sets the result for any reason
-  // i.e. when there is an error, we have result say "Error"
-
-  // when C button is pressed
+  // when C button is pressed, we reset everything
   void clear() {
     _left = "";
     _right = "";
     _operator = null;
-    result = null;
   }
 
   // adds a number to the operand
@@ -82,7 +80,7 @@ class Calculator {
   // we know now they want to add to the right operand
   void addDigit(String digit) {
     if (_operator == null) {
-      // if no operation selected yet, add to left operand
+      // if no operator selected yet, add to left operand
 
       _left += digit;
     } else {
@@ -95,7 +93,7 @@ class Calculator {
   // when backspace is pressed
   void removeDigit() {
     if (_operator == null) {
-      // if no operation selected yet, remove from left
+      // if no operator selected yet, remove from left
 
       _left.substring(0, _left.length - 1);
     } else {
@@ -110,42 +108,51 @@ class Calculator {
   // i.e. they have "1234 + ???" and now they work on the ???
   void setOperator(Operator operator) => _operator = operator;
 
-  // when = is pressed, set the result
-  void calculate() {
+  // when = is pressed, return the result
+  String calculate() {
     // if any of the operands are empty, throw an exception
     if (_left.isEmpty) throw LeftOperandEmptyException();
     if (_right.isEmpty) throw RightOperandEmptyException();
     if (_operator == null) throw OperatorEmptyException();
 
-    // will throw FormatException if passed "" or "23......2..2" or whatever
-    final left = double.parse(_left);
-    final right = double.parse(_right);
+    final double left;
+    final double right;
+
+    try {
+      // will throw FormatException if passed "23......2..2" or whatever
+      // let's wrap it in our own exception so we can catch it
+      left = double.parse(_left);
+      right = double.parse(_right);
+    } on FormatException {
+      throw InvalidInputException();
+    }
 
     // if they divide by 0, throw an exception
     if (_operator == Operator.divide && right == 0) {
       throw DivideByZeroException();
     }
 
-    final double tentativeResult;
+    final double result;
 
+    // compute the result based on the operator
     switch (_operator!) {
       case Operator.add:
-        tentativeResult = left + right;
+        result = left + right;
       case Operator.subtract:
-        tentativeResult = left - right;
+        result = left - right;
       case Operator.multiply:
-        tentativeResult = left * right;
+        result = left * right;
       case Operator.divide:
-        tentativeResult = left / right;
+        result = left / right;
     }
 
-    result = tentativeResult.format();
+    // return the result as a custom string (see below)
+    return result.format();
   }
 }
 
 // extensions on types let us add new functionality to them without modifying the original class
-// here we're adding a format() function to double
-// so we can format the result of the operation to look nice in the UI
+// here we're adding a format() function to double so we can format the result of the operation to look nice in the UI
 // we simply call result.format() and it will return a nicely formatted string
 extension NumberFormatting on double {
   // if result is 31.0, we return "31"

@@ -6,7 +6,7 @@ I made this so you guys can see how a real-world app might be structured and how
 
 I heavily recommend reading through the code and experimenting by running the app and changing things to see how it all works!
 
-I'd suggest starting by looking at the `main.dart` file and then moving on to the `home_screen.dart` file, and then just branching out to what interests you most. **Remember that you can CTRL + click on a function or class or anything to jump to its definition or where it's used, and hover over Flutter classes/functions to view their documentation.**
+I'd suggest starting by looking at the `main.dart` file and then moving on to the `home_screen.dart` file, and then just branching out to what interests you most. **Remember that you can CTRL + click on a function or class or anything when in VSCode to jump to its definition or where it's used, and hover over Flutter classes/functions to view their documentation.**
 
 Please ask questions in the Discord if something doesn't make sense or if you want to know more about something!
 

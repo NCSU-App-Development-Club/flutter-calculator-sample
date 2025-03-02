@@ -21,3 +21,8 @@ class DivideByZeroException implements CalculatorException {
   @override
   String get description => "Cannot divide by zero";
 }
+
+class InvalidInputException implements CalculatorException {
+  @override
+  String get description => "Invalid input";
+}
